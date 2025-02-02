@@ -3,10 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.util.ArrayList;
 
 class Path {
-    private ArrayList<Character> steps;
-    private String canonical = "";
-    private String factorized = "";
-
+    private final ArrayList<Character> steps;
 
     public Path() {
         steps = new ArrayList<>();
@@ -17,39 +14,40 @@ class Path {
     }
 
     public String getCanonicalPath() {
+        StringBuilder canonical = new StringBuilder();
         char currentPath = steps.get(0);
         for (char instruction : steps) {
             if (instruction != currentPath) {
-                canonical += " ";
+                canonical.append(" ");
             }
-            canonical += instruction;
+            canonical.append(instruction);
             currentPath = instruction;
         }
-        return canonical;
+        return canonical.toString();
     }
 
     public String getFactorizedPath() {
+        StringBuilder factorized = new StringBuilder();
         char currentPath = steps.get(0);
         int count = 0;
 
         for (char instruction : steps) {
             if (instruction == currentPath) {
                 count++;
-            }
-            else {
+            } else {
                 if (count != 1) {
-                    factorized += count;
+                    factorized.append(count);
                 }
-                factorized = factorized + currentPath + " ";
+                factorized.append(currentPath).append(" ");
                 currentPath = instruction;
                 count = 1;
             }
         }
 
         if (count != 1) {
-            factorized += count;
+            factorized.append(count);
         }
-        factorized = factorized + currentPath + " ";
-        return factorized;
+        factorized.append(currentPath).append(" ");
+        return factorized.toString();
     }
 }

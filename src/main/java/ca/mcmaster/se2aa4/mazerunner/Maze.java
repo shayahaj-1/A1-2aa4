@@ -19,9 +19,8 @@ class Maze {
 
     public Maze(String mazeFile) {
         loadMaze(mazeFile);
-        getEntry();
-        getExit();
-
+        findEntry();
+        findExit();
     }
 
     private void loadMaze(String mazeFile) {
@@ -48,7 +47,11 @@ class Maze {
         }
     }
 
-    private void getEntry() {
+    public boolean canPass(int x, int y) {
+        return x >= 0 && x < rows && y >= 0 && y < cols && maze[x][y] == ' ';
+    }
+
+    private void findEntry() {
         for (int i = 0; i < rows; i++) {
             if (maze[i][0] == ' ') {
                 xStart = i;
@@ -58,7 +61,7 @@ class Maze {
         }
     }
 
-    private void getExit() {
+    private void findExit() {
         for (int i = rows - 1; i >= 0; i--) {
             if (maze[i][cols - 1] == ' ') {
                 xEnd = i;
@@ -68,6 +71,14 @@ class Maze {
         }
     }
 
+    public int getXStart() {
+        return xStart;
+    }
+
+    public int getYStart() {
+        return yStart;
+    }
+
     public int getRows() {
         return rows;
     }
@@ -75,12 +86,4 @@ class Maze {
     public int getCols() {
         return cols;
     }
-
-    public char getTile(int row, int col) {
-    if (row >= 0 && row < rows && col >= 0 && col < cols) {
-        return maze[row][col];
-    }
-    return '#'; // Return wall character if out of bounds
-}
-
 }

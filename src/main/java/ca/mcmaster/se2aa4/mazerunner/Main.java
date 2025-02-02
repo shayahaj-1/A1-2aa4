@@ -14,7 +14,7 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        logger.info("** Starting Maze Runner");
+        logger.info("** Starting Maze Runner **");
 
         Options options = new Options();
         options.addOption("i", true, "Path to the maze file");
@@ -39,11 +39,12 @@ public class Main {
                     System.out.println("Factorized Path: " + path.getFactorizedPath());
                 }
             } else {
-                logger.error("No maze file provided (-i flag required).");
+                logger.error("No maze file provided (-i flag required). Exiting program.");
             }
         } catch (Exception e) {
             logger.error("An error occurred during program execution.", e);
         }
-        logger.info("** End of Maze Runner");
+
+        logger.info("** End of Maze Runner **");
     }
 }
