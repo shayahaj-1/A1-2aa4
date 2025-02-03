@@ -33,14 +33,9 @@ public class Main {
 
                 //path validation when -p flag is added
                 if (cmd.hasOption("p")) {
-                    String pathSequence = cmd.getOptionValue("p");
-                    boolean isValid = player.isPathValid(pathSequence);
-                    if (isValid == true) {
-                        System.out.println("Path validation result: Valid");
-                    }
-                    else {
-                        System.out.println("Path validation result: Valid");
-                    }
+                    String sequence = cmd.getOptionValue("p");
+                    System.out.println(player.validatePath(sequence));
+                    
                 } 
                 else {
                     //print paths for user

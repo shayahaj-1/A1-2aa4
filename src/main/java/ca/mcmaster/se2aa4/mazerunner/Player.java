@@ -11,6 +11,9 @@ class Player {
     private int row;
     private int col;
     private String direction;
+    private int currentRow;
+    private int currentCol;
+    private String currentDirection;
 
     //constructor
     public Player(Maze maze, int startRow, int startCol) {
@@ -107,69 +110,54 @@ class Player {
     }
 
     //path validation
-    public boolean isPathValid(String path) {
-        logger.info("Validating path: {}", path);
-        
-        //remove spaces
+    public String validatePath(String path) {
+        int count = 0;
         path = path.replace(" ", "");
-        int currentRow = row;
-        int currentCol = col;
-        String currentDirection = direction;
-        int i = 0;
+        logger.info("Validating path sequence: {}", path);
 
-        while (i < path.length()) {
-            char step = path.charAt(i);
+        for (int i = 0; i < path.length(); i++) {
+            char move = path.charAt(i);
 
-            if (Character.isDigit(step)) {
-                int count = 0;
+            //handle digit characters for move repetitions
+            if (Character.isDigit(move)) {
+                count = count * 10 + (move - '0');
+                continue;
+            }
+            if (count == 0) {
+                count = 1;
+            }
 
-                //parse digits
-                while (i < path.length() && Character.isDigit(path.charAt(i))) {
-                    count = count * 10 + (path.charAt(i) - '0');
-                    i++;
-                }
-
-                if (i < path.length()) {
-                    step = path.charAt(i);
-                    for (int j = 0; j < count; j++) {
-                        if (!processStep(step, currentRow, currentCol, currentDirection)) {
-                            return false;
+            for (int j = 0; j < count; j++) {
+                switch (move) {
+                    case 'F':
+                        if (!canMoveForward()) {
+                            logger.error("Invalid forward move at ({}, {})", row, col);
+                            return "Incorrect path";
                         }
-                    }
-                }
-            } else {
-                if (!processStep(step, currentRow, currentCol, currentDirection)) {
-                    return false;
+                        moveForward();
+                        break;
+                    case 'R':
+                        turnRight();
+                        break;
+                    case 'L':
+                        turnLeft();
+                        break;
+                    default:
+                        logger.error("Invalid path instruction: {}", move);
+                        return "Incorrect path";
                 }
             }
-            i++;
+
+            count = 0; //reset move count after processing
         }
 
-        logger.info("Path validation successful.");
-        return true;
-    }
-
-    //process each step given with -p flag
-    private boolean processStep(char step, int row, int col, String direction) {
-        switch (step) {
-            case 'F':
-                int[] newPos = moveForwardPosition(row, col, direction);
-                if (!maze.canPass(newPos[0], newPos[1])) {
-                    logger.warn("Invalid move detected at ({}, {})", row, col);
-                    return false;
-                }
-                break;
-            case 'L':
-                direction = turnLeft(direction);
-                break;
-            case 'R':
-                direction = turnRight(direction);
-                break;
-            default:
-                logger.error("Invalid path instruction: {}", step);
-                return false;
+        //check if the player has reached the maze exit
+        if (isAtExit()) {
+            logger.info("Path validation successful: Exit reached!");
+            return "Path validation successful: Correct path!";
+        } else {
+            logger.warn("Path validation failed: Did not reach the exit.");
+            return "Path validation failed: Incorrect path!";
         }
-        return true;
     }
-
 }
