@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Maze {
+    //calling logger and initialize variables
     private static final Logger logger = LogManager.getLogger();
     private char[][] maze;
     private int rows;
@@ -17,12 +18,14 @@ class Maze {
     private int xEnd;
     private int yEnd;
 
+    //constructor
     public Maze(String mazeFile) {
         loadMaze(mazeFile);
         findEntry();
         findExit();
     }
 
+    //loads maze from a given file
     private void loadMaze(String mazeFile) {
         try (BufferedReader reader = new BufferedReader(new FileReader(mazeFile))) {
             List<char[]> mazeLines = new ArrayList<>();
@@ -47,10 +50,12 @@ class Maze {
         }
     }
 
+    //is this a location you can pass through (not a wall)?
     public boolean canPass(int x, int y) {
         return x >= 0 && x < rows && y >= 0 && y < cols && maze[x][y] == ' ';
     }
 
+    //finds coordinates for entry
     private void findEntry() {
         for (int i = 0; i < rows; i++) {
             if (maze[i][0] == ' ') {
@@ -61,6 +66,7 @@ class Maze {
         }
     }
 
+    //finds coordinates for exit
     private void findExit() {
         for (int i = rows - 1; i >= 0; i--) {
             if (maze[i][cols - 1] == ' ') {
@@ -71,12 +77,21 @@ class Maze {
         }
     }
 
+    //getters and setters
     public int getXStart() {
         return xStart;
     }
 
     public int getYStart() {
         return yStart;
+    }
+
+    public int getXEnd() {
+        return xEnd;
+    }
+
+    public int getYEnd() {
+        return yEnd;
     }
 
     public int getRows() {

@@ -3,16 +3,21 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.util.ArrayList;
 
 class Path {
+
+    //initialize variable
     private final ArrayList<Character> steps;
 
+    //constructor
     public Path() {
         steps = new ArrayList<>();
     }
 
+    //add a step to the path
     public void addStep(char step) {
         steps.add(step);
     }
 
+    //get canonical path
     public String getCanonicalPath() {
         StringBuilder canonical = new StringBuilder();
         char currentPath = steps.get(0);
@@ -26,6 +31,7 @@ class Path {
         return canonical.toString();
     }
 
+    //get factorized path
     public String getFactorizedPath() {
         StringBuilder factorized = new StringBuilder();
         char currentPath = steps.get(0);

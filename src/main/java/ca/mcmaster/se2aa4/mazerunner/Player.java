@@ -4,12 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 class Player {
+
+    //calling logger and initialize variables
     private static final Logger logger = LogManager.getLogger();
     private Maze maze;
     private int row;
     private int col;
     private String direction;
 
+    //constructor
     public Player(Maze maze, int startRow, int startCol) {
         this.maze = maze;
         this.row = startRow;
@@ -18,6 +21,7 @@ class Player {
         logger.info("Runner initialized at ({}, {}) facing {}", row, col, direction);
     }
 
+    //path explorer
     public Path explore() {
         Path path = new Path();
         logger.info("Starting maze exploration using right-hand wall-following.");
@@ -43,8 +47,9 @@ class Player {
         return col == maze.getCols() - 1;
     }
 
+    //movement functions
     private boolean canMoveForward() {
-        int[] nextPos = moveForwardPosition();
+        int[] nextPos = moveForwardPosition(row, col, direction);
         return maze.canPass(nextPos[0], nextPos[1]);
     }
 
@@ -55,14 +60,10 @@ class Player {
     }
 
     private void moveForward() {
-        int[] newPos = moveForwardPosition();
+        int[] newPos = moveForwardPosition(row, col, direction);
         row = newPos[0];
         col = newPos[1];
         logger.info("Moved to position ({}, {})", row, col);
-    }
-
-    private int[] moveForwardPosition() {
-        return moveForwardPosition(row, col, direction);
     }
 
     private int[] moveForwardPosition(int row, int col, String direction) {
@@ -105,8 +106,12 @@ class Player {
         };
     }
 
+    //path validation
     public boolean isPathValid(String path) {
         logger.info("Validating path: {}", path);
+        
+        //remove spaces
+        path = path.replace(" ", "");
         int currentRow = row;
         int currentCol = col;
         String currentDirection = direction;
@@ -118,6 +123,7 @@ class Player {
             if (Character.isDigit(step)) {
                 int count = 0;
 
+                //parse digits
                 while (i < path.length() && Character.isDigit(path.charAt(i))) {
                     count = count * 10 + (path.charAt(i) - '0');
                     i++;
@@ -143,6 +149,7 @@ class Player {
         return true;
     }
 
+    //process each step given with -p flag
     private boolean processStep(char step, int row, int col, String direction) {
         switch (step) {
             case 'F':
@@ -164,4 +171,5 @@ class Player {
         }
         return true;
     }
+
 }

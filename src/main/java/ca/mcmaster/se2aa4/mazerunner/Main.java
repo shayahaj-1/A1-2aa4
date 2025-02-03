@@ -11,11 +11,13 @@ import java.util.List;
 
 public class Main {
 
+    //calling logger
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner **");
 
+        //intialize options/parser
         Options options = new Options();
         options.addOption("i", true, "Path to the maze file");
         options.addOption("p", true, "Maze path sequence");
@@ -23,28 +25,36 @@ public class Main {
 
         try {
             CommandLine cmd = parser.parse(options, args);
-
+            //finding path for user with -i flag
             if (cmd.hasOption("i")) {
                 String mazeFile = cmd.getOptionValue("i");
                 Maze maze = new Maze(mazeFile);
                 Player player = new Player(maze, maze.getXStart(), maze.getYStart());
 
+                //path validation when -p flag is added
                 if (cmd.hasOption("p")) {
                     String pathSequence = cmd.getOptionValue("p");
                     boolean isValid = player.isPathValid(pathSequence);
-                    logger.info("Path validation result: {}", isValid ? "Valid" : "Invalid");
-                } else {
+                    if (isValid == true) {
+                        System.out.println("Path validation result: Valid");
+                    }
+                    else {
+                        System.out.println("Path validation result: Valid");
+                    }
+                } 
+                else {
+                    //print paths for user
                     Path path = player.explore();
                     System.out.println("Canonical Path: " + path.getCanonicalPath());
                     System.out.println("Factorized Path: " + path.getFactorizedPath());
                 }
-            } else {
+            } 
+            else {
                 logger.error("No maze file provided (-i flag required). Exiting program.");
             }
         } catch (Exception e) {
             logger.error("An error occurred during program execution.", e);
         }
-
         logger.info("** End of Maze Runner **");
     }
 }
