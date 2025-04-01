@@ -29,7 +29,7 @@ public class Main {
             if (cmd.hasOption("i")) {
                 String mazeFile = cmd.getOptionValue("i");
                 Maze maze = new Maze(mazeFile);
-                Player player = new Player(maze, maze.getXStart(), maze.getYStart());
+                MazeRunner player = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
 
                 //path validation when -p flag is added
                 if (cmd.hasOption("p")) {
