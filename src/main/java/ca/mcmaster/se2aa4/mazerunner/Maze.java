@@ -10,6 +10,7 @@ import java.util.List;
 class Maze {
     //calling logger and initialize variables
     private static final Logger logger = LogManager.getLogger();
+    private MazeLoader loader = new MazeLoaderAdapter();
     private char[][] maze;
     private int rows;
     private int cols;
@@ -20,33 +21,14 @@ class Maze {
 
     //constructor
     public Maze(String mazeFile) {
-        loadMaze(mazeFile);
-        findEntry();
-        findExit();
-    }
-
-    //loads maze from a given file
-    private void loadMaze(String mazeFile) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(mazeFile))) {
-            List<char[]> mazeLines = new ArrayList<>();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                mazeLines.add(line.toCharArray());
-            }
-
-            rows = mazeLines.size();
-            if (rows > 0) {
-                cols = mazeLines.get(0).length;
-                maze = new char[rows][cols];
-                for (int i = 0; i < rows; i++) {
-                    maze[i] = mazeLines.get(i);
-                }
-                logger.info("Maze loaded successfully from file: {}", mazeFile);
-            } else {
-                logger.error("Empty maze file: {}", mazeFile);
-            }
-        } catch (Exception e) {
-            logger.error("Failed to load maze from file: {}", mazeFile, e);
+        maze = loader.loadMaze(mazeFile);
+        if (maze != null) {
+            rows = maze.length;
+            cols = maze[0].length;
+            findEntry();
+            findExit();
+        } else {
+            logger.error("Failed to load maze. Maze is null.");
         }
     }
 

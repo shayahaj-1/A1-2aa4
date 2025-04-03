@@ -3,23 +3,23 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
   http://maven.apache.org/maven-v4_0_0.xsd">
-
+ 
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
-
+ 
   <groupId>io.github.ace-lectures.2aa4</groupId>
   <!-- Replace this with your MacId. E.g., mine would be a1-mossers -->
-  <artifactId>a1-jeyasees</artifactId>
+  <artifactId>a1-thiyaa3</artifactId>
   <version>1.0</version>
   <name>McMaster :: SFWRENG :: 2AA4 :: Maze Runner</name>
-
+ 
   <properties>
     <mainClass>ca.mcmaster.se2aa4.mazerunner.Main</mainClass>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
+ 
   <dependencies>
     <!-- To read arguments from command line-->
     <dependency>
@@ -36,8 +36,15 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
     </dependency>
+    <!-- Unit testing with jUnit 5-->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-
+ 
   <build>
     <finalName>mazerunner</finalName>
     <plugins>
@@ -68,7 +75,7 @@
       </plugin>
     </plugins>
   </build>
-
+ 
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -80,5 +87,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+ 
 </project>
+ 

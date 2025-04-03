@@ -45,7 +45,7 @@ abstract class MazeRunner {
     }
 
     protected boolean isAtExit() {
-        return col == maze.getCols() - 1;
+        return row == maze.getXEnd() && col == maze.getYEnd();
     }
 
     protected abstract boolean canMoveForward();
