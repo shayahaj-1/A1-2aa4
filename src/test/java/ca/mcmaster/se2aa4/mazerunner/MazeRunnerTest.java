@@ -54,7 +54,7 @@ class MazeRunnerTest {
 
     @Test
     //checks that runner turns in place
-    void testRightHandRunnerTurnRight() {
+    void testTurnRight() {
         Maze maze = new Maze("direct.maz.txt");
         RightHandRunner runner = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
         runner.turnRight();
