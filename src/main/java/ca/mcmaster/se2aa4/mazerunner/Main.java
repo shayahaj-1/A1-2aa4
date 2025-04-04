@@ -25,10 +25,11 @@ public class Main {
 
         try {
             CommandLine cmd = parser.parse(options, args);
+            MazeLoader loader = new MazeLoaderAdapter();
             //finding path for user with -i flag
             if (cmd.hasOption("i")) {
                 String mazeFile = cmd.getOptionValue("i");
-                Maze maze = new Maze(mazeFile);
+                Maze maze = new Maze(mazeFile, loader);
                 MazeRunner player = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
 
                 //path validation when -p flag is added

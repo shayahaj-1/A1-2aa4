@@ -16,21 +16,24 @@ class MazeRunnerTest {
     @Test
     //should be able to pass through open space
     void testCanPass() {
-        Maze maze = new Maze("direct.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("direct.maz.txt", loader);
         assertTrue(maze.canPass(1, 1));
     }
 
     @Test
     //should not be able to pass through walls
     void testCannotPass() {
-        Maze maze = new Maze("direct.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("direct.maz.txt", loader);
         assertFalse(maze.canPass(0, 0));
     }
 
     @Test
     //checks that start and end positions are properly found on left and right boundards respectively
     void testEntryExit() {
-        Maze maze = new Maze("medium.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("medium.maz.txt", loader);
         assertTrue(maze.getXStart() >= 0 && maze.getYStart() == 0);
         assertTrue(maze.getXEnd() >= 0 && maze.getYEnd() == maze.getCols() - 1);
     }
@@ -38,7 +41,8 @@ class MazeRunnerTest {
     @Test
     //checks that runner is initialized at start point
     void testInitialization() {
-        Maze maze = new Maze("small.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("small.maz.txt", loader);
         RightHandRunner runner = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
         assertNotNull(runner);
     }
@@ -46,7 +50,8 @@ class MazeRunnerTest {
     @Test
     //checks basic movement
     void testMoveForward() {
-        Maze maze = new Maze("direct.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("direct.maz.txt", loader);
         RightHandRunner runner = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
         runner.moveForward();
         assertNotEquals(maze.getXStart(), runner.row);
@@ -55,7 +60,8 @@ class MazeRunnerTest {
     @Test
     //checks that runner turns in place
     void testTurnRight() {
-        Maze maze = new Maze("direct.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("direct.maz.txt", loader);
         RightHandRunner runner = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
         runner.turnRight();
         assertEquals(maze.getXStart(), runner.row);
@@ -85,7 +91,8 @@ class MazeRunnerTest {
     @Test
     //checks that path validation is accurate
     void testPathValidation() {
-        Maze maze = new Maze("straight.maz.txt");
+        MazeLoader loader = new MazeLoaderAdapter();
+        Maze maze = new Maze("straight.maz.txt", loader);
         RightHandRunner runner = new RightHandRunner(maze, maze.getXStart(), maze.getYStart());
         String validation = runner.validatePath("FFFF");
         assertTrue(validation.contains("Correct path!"), "Path should be valid");

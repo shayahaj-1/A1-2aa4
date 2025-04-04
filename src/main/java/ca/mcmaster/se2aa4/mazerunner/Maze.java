@@ -10,7 +10,7 @@ import java.util.List;
 class Maze {
     //calling logger and initialize variables
     private static final Logger logger = LogManager.getLogger();
-    private MazeLoader loader = new MazeLoaderAdapter();
+    private MazeLoader loader;
     private char[][] maze;
     private int rows;
     private int cols;
@@ -20,7 +20,8 @@ class Maze {
     private int yEnd;
 
     //constructor
-    public Maze(String mazeFile) {
+    public Maze(String mazeFile, MazeLoader loader) {
+        this.loader = loader;
         maze = loader.loadMaze(mazeFile);
         if (maze != null) {
             rows = maze.length;
