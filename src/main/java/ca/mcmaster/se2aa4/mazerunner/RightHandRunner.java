@@ -10,6 +10,30 @@ class RightHandRunner extends MazeRunner {
     }
 
     @Override
+    protected Path explore() {
+        Path path = new Path();
+        logger.info("Starting maze exploration.");
+
+        while (!isAtExit()) {
+            if (canMoveRight()) {
+                turnRight();
+                moveForward();
+                path.addStep('R');
+                path.addStep('F');
+            } else if (canMoveForward()) {
+                moveForward();
+                path.addStep('F');
+            } else {
+                turnLeft();
+                path.addStep('L');
+            }
+        }
+        logger.info("Exploration complete.");
+        return path;
+    }
+
+
+    @Override
     protected boolean canMoveForward() {
         int[] nextPos = moveForwardPosition(row, col, direction);
         return maze.canPass(nextPos[0], nextPos[1]);
